@@ -159,16 +159,16 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
 
 <script type="module">
   import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query }
+  import { getFirestore, collection, getDocs }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey:            "AIzaSyCkWh8N2aykMXspEvHdoat_v9pPh1eQx48",
-    authDomain:        "pritomroy-portfolio.firebaseapp.com",
-    projectId:         "pritomroy-portfolio",
-    storageBucket:     "pritomroy-portfolio.firebasestorage.app",
-    messagingSenderId: "460874716994",
-    appId:             "1:460874716994:web:95fd11130309d4c1ebdadb"
+    apiKey:            "AIzaSyC4aOWeej9Aa1rX4lMRMsmL5R897b39daQ",
+    authDomain:        "pritomroy-portfolio-2d5e9.firebaseapp.com",
+    projectId:         "pritomroy-portfolio-2d5e9",
+    storageBucket:     "pritomroy-portfolio-2d5e9.firebasestorage.app",
+    messagingSenderId: "174516290464",
+    appId:             "1:174516290464:web:69926f58572730ac40dac5"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -184,7 +184,6 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
         return;
       }
 
-      // Sort by date newest first
       const labs = [];
       snap.forEach(doc => labs.push({ id: doc.id, ...doc.data() }));
       labs.sort((a, b) => new Date(b.date) - new Date(a.date));
