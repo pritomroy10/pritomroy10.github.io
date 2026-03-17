@@ -85,7 +85,6 @@ textarea{resize:vertical;min-height:110px;}
   </header>
 
   <div class="main">
-    <!-- FORM -->
     <div class="form-card">
       <h2>// NEW LAB POST</h2>
 
@@ -115,7 +114,6 @@ textarea{resize:vertical;min-height:110px;}
       <div class="error-msg" id="errorMsg"></div>
     </div>
 
-    <!-- LABS LIST -->
     <div class="labs-panel">
       <div class="stats-bar">
         <div class="stat"><div class="num" id="totalCount">—</div><div class="lbl">TOTAL LABS</div></div>
@@ -133,14 +131,14 @@ textarea{resize:vertical;min-height:110px;}
   import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  // YOUR FIREBASE CONFIG
+  // CORRECT FIREBASE CONFIG
   const firebaseConfig = {
-    apiKey:            "AIzaSyCkWh8N2aykMXspEvHdoat_v9pPh1eQx48",
-    authDomain:        "pritomroy-portfolio.firebaseapp.com",
-    projectId:         "pritomroy-portfolio",
-    storageBucket:     "pritomroy-portfolio.firebasestorage.app",
-    messagingSenderId: "460874716994",
-    appId:             "1:460874716994:web:95fd11130309d4c1ebdadb"
+    apiKey:            "AIzaSyC4aOWeej9Aa1rX4lMRMsmL5R897b39daQ",
+    authDomain:        "pritomroy-portfolio-2d5e9.firebaseapp.com",
+    projectId:         "pritomroy-portfolio-2d5e9",
+    storageBucket:     "pritomroy-portfolio-2d5e9.firebasestorage.app",
+    messagingSenderId: "174516290464",
+    appId:             "1:174516290464:web:69926f58572730ac40dac5"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -207,14 +205,11 @@ textarea{resize:vertical;min-height:110px;}
     const desc  = document.getElementById('labDesc').value.trim();
     const date  = document.getElementById('labDate').value || new Date().toISOString().split('T')[0];
 
-    if (!title || !desc) {
-      alert('Please fill in Title and Description.');
-      return;
-    }
+    if (!title || !desc) { alert('Please fill in Title and Description.'); return; }
 
-    const btn      = document.getElementById('submitBtn');
-    const progress = document.getElementById('progressBar');
-    const fill     = document.getElementById('progressFill');
+    const btn       = document.getElementById('submitBtn');
+    const progress  = document.getElementById('progressBar');
+    const fill      = document.getElementById('progressFill');
     const successEl = document.getElementById('successMsg');
     const errorEl   = document.getElementById('errorMsg');
 
@@ -227,9 +222,9 @@ textarea{resize:vertical;min-height:110px;}
 
     try {
       await addDoc(collection(db, 'labs'), {
-        title:       title,
+        title,
         description: desc,
-        date:        date,
+        date,
         imageBase64: imageBase64 || null,
         createdAt:   serverTimestamp()
       });
@@ -237,31 +232,26 @@ textarea{resize:vertical;min-height:110px;}
       fill.style.width = '100%';
       successEl.style.display = 'block';
 
-      // Reset form
-      document.getElementById('labTitle').value  = '';
-      document.getElementById('labDesc').value   = '';
-      document.getElementById('labDate').value   = new Date().toISOString().split('T')[0];
+      document.getElementById('labTitle').value = '';
+      document.getElementById('labDesc').value  = '';
+      document.getElementById('labDate').value  = new Date().toISOString().split('T')[0];
       document.getElementById('imagePreview').style.display = 'none';
       document.getElementById('uploadLabel').textContent    = 'Click to upload your lab screenshot';
       document.getElementById('imageInput').value = '';
       imageBase64 = null;
 
-      setTimeout(() => {
-        progress.style.display = 'none';
-        fill.style.width = '0%';
-      }, 1500);
-
+      setTimeout(() => { progress.style.display='none'; fill.style.width='0%'; }, 1500);
       renderAdminLabs();
 
     } catch(err) {
-      errorEl.textContent    = '✗ Error: ' + err.message;
-      errorEl.style.display  = 'block';
+      errorEl.textContent   = '✗ Error: ' + err.message;
+      errorEl.style.display = 'block';
       progress.style.display = 'none';
       console.error('Firebase error:', err);
     }
 
-    btn.disabled    = false;
-    btn.innerHTML   = '<i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab';
+    btn.disabled  = false;
+    btn.innerHTML = '<i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab';
   };
 
   // ── DELETE ──
@@ -301,7 +291,7 @@ textarea{resize:vertical;min-height:110px;}
 
       container.innerHTML = labs.map(lab => {
         const dateStr = lab.date
-          ? new Date(lab.date).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })
+          ? new Date(lab.date).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})
           : '';
         return `<div class="lab-item">
           ${lab.imageBase64
