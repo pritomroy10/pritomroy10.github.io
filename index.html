@@ -10,148 +10,244 @@
 *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
 body{background:#060d1a;color:#e2e8f0;font-family:'DM Sans',sans-serif;overflow-x:hidden;}
 
+/* STAR CANVAS */
+#starCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+
+/* CURSOR GLOW that follows mouse */
+#cursorGlow{
+  position:fixed;width:400px;height:400px;
+  border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:left .08s ease, top .08s ease;
+}
+
+nav,section,.hero,footer{position:relative;z-index:2;}
+
 /* NAVBAR */
-nav{position:fixed;width:100%;top:0;display:flex;justify-content:space-between;align-items:center;padding:16px 8%;background:rgba(6,13,26,0.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(56,189,248,.12);z-index:200;}
-.logo-area h2{font-family:'Space Mono',monospace;font-size:20px;color:#38bdf8;letter-spacing:1px;}
+nav{
+  position:fixed;width:100%;top:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 8%;
+  background:rgba(6,13,26,0.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(56,189,248,.15);
+  z-index:200;
+  box-shadow:0 0 30px rgba(56,189,248,.05);
+}
+.logo-area h2{
+  font-family:'Space Mono',monospace;font-size:20px;color:#38bdf8;letter-spacing:1px;
+  text-shadow:0 0 20px rgba(56,189,248,.6), 0 0 40px rgba(56,189,248,.3);
+}
 .location{font-size:12px;color:#64748b;margin-top:3px;}
 .location i{color:#38bdf8;margin-right:5px;}
 nav a{color:#94a3b8;margin-left:22px;text-decoration:none;font-size:14px;letter-spacing:.5px;transition:.25s;}
-nav a:hover{color:#38bdf8;}
+nav a:hover{color:#38bdf8;text-shadow:0 0 12px rgba(56,189,248,.8);}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 10% 60px;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(56,189,248,.07) 0%,transparent 70%),linear-gradient(160deg,#020810,#060d1a 60%,#020810);position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(56,189,248,.06) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;}
-.hero h1{font-size:50px;line-height:1.15;font-family:'Space Mono',monospace;animation:fadeDown .9s ease both;}
-.hero span{color:#38bdf8;}
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:100px 10% 60px;
+  background:transparent;position:relative;overflow:hidden;
+}
+/* Hero ambient glow blobs */
+.hero::before{
+  content:'';position:absolute;width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:pulseGlow 4s ease-in-out infinite;
+}
+.hero::after{
+  content:'';position:absolute;width:300px;height:300px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(56,189,248,0.05) 0%, transparent 70%);
+  top:20%;right:10%;
+  animation:pulseGlow 6s ease-in-out infinite reverse;
+}
+@keyframes pulseGlow{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+  50%{transform:translate(-50%,-50%) scale(1.15);opacity:.7;}
+}
+.hero h1{
+  font-size:50px;line-height:1.15;font-family:'Space Mono',monospace;
+  animation:fadeDown .9s ease both;
+  text-shadow:0 0 40px rgba(56,189,248,.2);
+}
+.hero span{
+  color:#38bdf8;
+  text-shadow:0 0 30px rgba(56,189,248,.8), 0 0 60px rgba(56,189,248,.4), 0 0 100px rgba(56,189,248,.2);
+  animation:nameGlow 3s ease-in-out infinite;
+}
+@keyframes nameGlow{
+  0%,100%{text-shadow:0 0 30px rgba(56,189,248,.8), 0 0 60px rgba(56,189,248,.4);}
+  50%{text-shadow:0 0 50px rgba(56,189,248,1), 0 0 80px rgba(56,189,248,.6), 0 0 120px rgba(56,189,248,.3);}
+}
 .hero p{margin-top:16px;font-size:17px;color:#94a3b8;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.75;animation:fadeUp 1.2s ease both;}
-.btn{margin-top:32px;display:inline-block;padding:13px 30px;background:transparent;color:#38bdf8;font-weight:600;border:1.5px solid #38bdf8;border-radius:6px;text-decoration:none;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:1px;transition:.3s;}
-.btn:hover{background:#38bdf8;color:#060d1a;box-shadow:0 0 24px rgba(56,189,248,.35);}
+.btn{
+  margin-top:32px;display:inline-block;padding:13px 30px;
+  background:transparent;color:#38bdf8;font-weight:600;
+  border:1.5px solid #38bdf8;border-radius:6px;text-decoration:none;
+  font-family:'Space Mono',monospace;font-size:13px;letter-spacing:1px;transition:.3s;
+  box-shadow:0 0 15px rgba(56,189,248,.2), inset 0 0 15px rgba(56,189,248,.05);
+}
+.btn:hover{
+  background:#38bdf8;color:#060d1a;
+  box-shadow:0 0 30px rgba(56,189,248,.6), 0 0 60px rgba(56,189,248,.3);
+}
 
 /* SECTIONS */
 section{padding:100px 8%;}
-.title{font-size:12px;font-family:'Space Mono',monospace;letter-spacing:3px;color:#38bdf8;text-align:center;margin-bottom:10px;text-transform:uppercase;}
-.section-heading{font-size:30px;font-family:'Space Mono',monospace;text-align:center;margin-bottom:16px;color:#f1f5f9;}
+.title{font-size:12px;font-family:'Space Mono',monospace;letter-spacing:3px;color:#38bdf8;text-align:center;margin-bottom:10px;text-transform:uppercase;text-shadow:0 0 15px rgba(56,189,248,.5);}
+.section-heading{
+  font-size:30px;font-family:'Space Mono',monospace;text-align:center;margin-bottom:16px;color:#f1f5f9;
+  text-shadow:0 0 20px rgba(255,255,255,.1);
+}
+
+/* Section dividers with glow */
+section::before{
+  content:'';display:block;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(56,189,248,.3), transparent);
+  margin-bottom:0;
+  box-shadow:0 0 10px rgba(56,189,248,.2);
+}
 
 /* ABOUT */
+#about{background:rgba(6,13,26,0.6);}
 #about p{max-width:720px;margin:auto;text-align:center;color:#94a3b8;line-height:1.85;font-size:16px;}
 
 /* EXPERIENCE */
+#experience{background:rgba(4,9,15,0.7);}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
-.card{background:#0b1628;padding:28px;border-radius:10px;border:1px solid rgba(56,189,248,.1);transition:.3s;}
-.card:hover{transform:translateY(-6px);border-color:#38bdf8;box-shadow:0 8px 32px rgba(56,189,248,.12);}
-.card h3{margin-bottom:8px;color:#38bdf8;font-family:'Space Mono',monospace;font-size:15px;}
+.card{
+  background:rgba(11,22,40,0.8);padding:28px;border-radius:10px;
+  border:1px solid rgba(56,189,248,.1);transition:.3s;
+  box-shadow:0 0 20px rgba(56,189,248,.03);
+}
+.card:hover{
+  transform:translateY(-6px);border-color:#38bdf8;
+  box-shadow:0 0 30px rgba(56,189,248,.2), 0 0 60px rgba(56,189,248,.08), inset 0 0 30px rgba(56,189,248,.03);
+}
+.card h3{
+  margin-bottom:8px;color:#38bdf8;font-family:'Space Mono',monospace;font-size:15px;
+  text-shadow:0 0 15px rgba(56,189,248,.4);
+}
 .card .meta{color:#64748b;font-size:13px;margin-bottom:12px;}
 .card p{color:#94a3b8;font-size:14px;line-height:1.7;}
 
 /* SKILLS */
-#skills{text-align:center;}
+#skills{background:rgba(6,13,26,0.6);text-align:center;}
 .skills-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:780px;margin:auto;}
-.skill{padding:9px 18px;background:#0b1628;border:1px solid rgba(56,189,248,.15);border-radius:5px;font-size:13px;font-family:'Space Mono',monospace;color:#94a3b8;letter-spacing:.5px;transition:.25s;}
-.skill:hover{border-color:#38bdf8;color:#38bdf8;}
+.skill{
+  padding:9px 18px;background:rgba(11,22,40,0.8);
+  border:1px solid rgba(56,189,248,.15);border-radius:5px;
+  font-size:13px;font-family:'Space Mono',monospace;color:#94a3b8;letter-spacing:.5px;transition:.3s;
+}
+.skill:hover{
+  border-color:#38bdf8;color:#38bdf8;
+  box-shadow:0 0 15px rgba(56,189,248,.3), inset 0 0 10px rgba(56,189,248,.05);
+  text-shadow:0 0 10px rgba(56,189,248,.6);
+}
 
-/* ── LABS SECTION ── */
-#labs{background:#04090f;padding-bottom:80px;}
-
-/* Completed labs badge */
+/* LABS */
+#labs{background:rgba(4,9,15,0.75);padding-bottom:80px;}
 .labs-stats-row{display:flex;justify-content:center;margin-bottom:40px;}
 .completed-badge{
   display:inline-flex;align-items:center;gap:10px;
-  background:#0b1628;border:1px solid rgba(56,189,248,.2);
+  background:rgba(11,22,40,0.8);border:1px solid rgba(56,189,248,.25);
   border-radius:50px;padding:10px 24px;
   font-family:'Space Mono',monospace;font-size:13px;color:#94a3b8;
+  box-shadow:0 0 20px rgba(56,189,248,.1), inset 0 0 20px rgba(56,189,248,.03);
 }
 .completed-badge .num{
   font-size:22px;font-weight:700;color:#38bdf8;
+  text-shadow:0 0 15px rgba(56,189,248,.8);
   animation:countUp .8s ease both;
 }
-.completed-badge i{color:#38bdf8;font-size:16px;}
+.completed-badge i{color:#38bdf8;font-size:16px;filter:drop-shadow(0 0 6px rgba(56,189,248,.8));}
 @keyframes countUp{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
 
 /* CAROUSEL */
 .carousel-wrapper{position:relative;}
-.carousel-track-outer{
-  overflow:hidden;border-radius:12px;
-  cursor:grab;
-  user-select:none;
-}
+.carousel-track-outer{overflow:hidden;border-radius:12px;cursor:grab;user-select:none;}
 .carousel-track-outer:active{cursor:grabbing;}
-.carousel-track{
-  display:flex;
-  gap:24px;
-  transition:transform .45s cubic-bezier(.4,0,.2,1);
-  will-change:transform;
-}
+.carousel-track{display:flex;gap:24px;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform;}
 
 /* LAB CARD */
 .lab-card{
-  background:#0b1628;
-  border-radius:12px;
-  border:1px solid rgba(56,189,248,.1);
-  overflow:hidden;
-  flex:0 0 320px;
-  display:flex;
-  flex-direction:column;
+  background:rgba(11,22,40,0.85);border-radius:12px;
+  border:1px solid rgba(56,189,248,.1);overflow:hidden;
+  flex:0 0 320px;display:flex;flex-direction:column;
   transition:border-color .3s,box-shadow .3s,transform .3s;
   animation:cardIn .5s ease both;
+  box-shadow:0 0 20px rgba(56,189,248,.04);
 }
 @keyframes cardIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.lab-card:hover{border-color:#38bdf8;box-shadow:0 8px 32px rgba(56,189,248,.12);transform:translateY(-4px);}
+.lab-card:hover{
+  border-color:#38bdf8;transform:translateY(-6px);
+  box-shadow:0 0 40px rgba(56,189,248,.2), 0 0 80px rgba(56,189,248,.08), inset 0 0 30px rgba(56,189,248,.03);
+}
 .lab-card img{width:100%;height:190px;object-fit:cover;display:block;}
 .lab-card .no-img{width:100%;height:130px;background:#0f1f3a;display:flex;align-items:center;justify-content:center;}
-.lab-card .no-img i{font-size:32px;color:#1e3a4a;}
+.lab-card .no-img i{font-size:32px;color:#1e3a4a;filter:drop-shadow(0 0 8px rgba(56,189,248,.3));}
 .lab-card-body{padding:18px;flex:1;display:flex;flex-direction:column;}
-.lab-card-body h3{font-family:'Space Mono',monospace;font-size:13px;color:#38bdf8;margin-bottom:6px;}
+.lab-card-body h3{
+  font-family:'Space Mono',monospace;font-size:13px;color:#38bdf8;margin-bottom:6px;
+  text-shadow:0 0 12px rgba(56,189,248,.5);
+}
 .lab-card-body .lab-date{font-size:11px;color:#475569;font-family:'Space Mono',monospace;margin-bottom:10px;}
-
-/* Description with See More */
 .lab-desc{font-size:13px;color:#94a3b8;line-height:1.7;flex:1;}
-.lab-desc-text{
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
-  transition:all .3s;
-}
+.lab-desc-text{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;transition:all .3s;}
 .lab-desc-text.expanded{-webkit-line-clamp:unset;display:block;}
-.see-more-btn{
-  background:none;border:none;color:#38bdf8;font-size:12px;
-  font-family:'Space Mono',monospace;cursor:pointer;margin-top:8px;
-  padding:0;text-align:left;letter-spacing:.5px;
-  transition:opacity .2s;
-}
-.see-more-btn:hover{opacity:.7;}
+.see-more-btn{background:none;border:none;color:#38bdf8;font-size:12px;font-family:'Space Mono',monospace;cursor:pointer;margin-top:8px;padding:0;text-align:left;letter-spacing:.5px;transition:.2s;}
+.see-more-btn:hover{text-shadow:0 0 10px rgba(56,189,248,.8);}
 
-/* NAV BUTTONS */
+/* CAROUSEL NAV */
 .carousel-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:28px;}
 .carousel-btn{
   width:44px;height:44px;border-radius:50%;
-  background:#0b1628;border:1.5px solid rgba(56,189,248,.25);
+  background:rgba(11,22,40,0.8);border:1.5px solid rgba(56,189,248,.3);
   color:#38bdf8;font-size:18px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:.25s;
+  display:flex;align-items:center;justify-content:center;transition:.3s;
+  box-shadow:0 0 15px rgba(56,189,248,.1);
 }
-.carousel-btn:hover{background:#38bdf8;color:#060d1a;border-color:#38bdf8;box-shadow:0 0 16px rgba(56,189,248,.3);}
-.carousel-btn:disabled{opacity:.3;cursor:not-allowed;}
+.carousel-btn:hover{
+  background:#38bdf8;color:#060d1a;border-color:#38bdf8;
+  box-shadow:0 0 25px rgba(56,189,248,.6), 0 0 50px rgba(56,189,248,.2);
+}
+.carousel-btn:disabled{opacity:.3;cursor:not-allowed;box-shadow:none;}
 .carousel-dots{display:flex;gap:8px;align-items:center;}
 .dot{width:8px;height:8px;border-radius:50%;background:#1e3a4a;cursor:pointer;transition:.25s;}
-.dot.active{background:#38bdf8;width:22px;border-radius:4px;}
+.dot.active{background:#38bdf8;width:22px;border-radius:4px;box-shadow:0 0 10px rgba(56,189,248,.8);}
 
-/* LABS STATES */
-.labs-loading{text-align:center;padding:50px;color:#38bdf8;font-family:'Space Mono',monospace;font-size:13px;}
-.labs-loading i{display:block;font-size:28px;margin-bottom:12px;animation:spin 1s linear infinite;}
+/* STATES */
+.labs-loading{text-align:center;padding:50px;color:#38bdf8;font-family:'Space Mono',monospace;font-size:13px;text-shadow:0 0 10px rgba(56,189,248,.5);}
+.labs-loading i{display:block;font-size:28px;margin-bottom:12px;animation:spin 1s linear infinite;filter:drop-shadow(0 0 8px rgba(56,189,248,.8));}
 @keyframes spin{to{transform:rotate(360deg);}}
 .labs-empty{text-align:center;padding:60px 20px;color:#475569;font-family:'Space Mono',monospace;font-size:13px;border:1px dashed rgba(56,189,248,.15);border-radius:10px;}
 .labs-empty i{font-size:36px;display:block;margin-bottom:14px;color:#1e3a4a;}
 
 /* CONTACT */
-#contact{text-align:center;}
+#contact{background:rgba(6,13,26,0.6);text-align:center;}
 .icons{margin-top:28px;}
 .icons a{font-size:28px;margin:12px;color:#64748b;transition:.3s;display:inline-block;}
-.icons a:hover{color:#38bdf8;transform:scale(1.15);}
+.icons a:hover{
+  color:#38bdf8;transform:scale(1.2);
+  filter:drop-shadow(0 0 12px rgba(56,189,248,.9));
+}
 .contact-info{margin-top:20px;color:#64748b;font-size:14px;line-height:2;}
 
 /* FOOTER */
-footer{text-align:center;padding:22px;background:#020810;color:#334155;font-size:13px;font-family:'Space Mono',monospace;border-top:1px solid rgba(56,189,248,.06);}
-footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
+footer{
+  text-align:center;padding:22px;background:rgba(2,8,16,0.9);
+  color:#334155;font-size:13px;font-family:'Space Mono',monospace;
+  border-top:1px solid rgba(56,189,248,.1);
+  box-shadow:0 -5px 30px rgba(56,189,248,.05);
+}
+footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;text-shadow:0 0 10px rgba(56,189,248,.4);}
 
-/* SCROLL ANIMATIONS */
+/* SCROLL REVEAL */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
@@ -160,6 +256,9 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
 </style>
 </head>
 <body>
+
+<canvas id="starCanvas"></canvas>
+<div id="cursorGlow"></div>
 
 <nav>
   <div class="logo-area">
@@ -223,12 +322,9 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
   </div>
 </section>
 
-<!-- LABS -->
 <section id="labs">
   <p class="title">// hands-on practice</p>
   <h2 class="section-heading">Networking Labs</h2>
-
-  <!-- Completed Labs Badge -->
   <div class="labs-stats-row">
     <div class="completed-badge">
       <i class="fa-solid fa-flask"></i>
@@ -236,15 +332,12 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
       <span class="num" id="completedCount">0</span>
     </div>
   </div>
-
   <div id="labsLoading" class="labs-loading">
     <i class="fa-solid fa-circle-notch"></i>Loading labs...
   </div>
-
   <div id="labsEmpty" class="labs-empty" style="display:none;">
     <i class="fa-solid fa-network-wired"></i>No labs published yet. Check back soon!
   </div>
-
   <div id="carouselArea" style="display:none;">
     <div class="carousel-wrapper">
       <div class="carousel-track-outer" id="trackOuter">
@@ -252,13 +345,9 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
       </div>
     </div>
     <div class="carousel-nav">
-      <button class="carousel-btn" id="prevBtn" onclick="slide(-1)">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
+      <button class="carousel-btn" id="prevBtn" onclick="slide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
       <div class="carousel-dots" id="carouselDots"></div>
-      <button class="carousel-btn" id="nextBtn" onclick="slide(1)">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
+      <button class="carousel-btn" id="nextBtn" onclick="slide(1)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
   </div>
 </section>
@@ -266,7 +355,7 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
 <section id="contact">
   <p class="title">// reach out</p>
   <h2 class="section-heading reveal">Contact Me</h2>
-  <p style="color:#64748b;font-size:14px;" class="reveal">Available for job opportunities</p>
+  <p class="reveal" style="color:#64748b;font-size:14px;">Available for job opportunities</p>
   <div class="icons reveal">
     <a href="https://wa.me/966545653705" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="mailto:roynet10923@gmail.com"><i class="fas fa-envelope"></i></a>
@@ -281,6 +370,105 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
 <footer>
   <p>© 2026 Pritom Roy | Portfolio <a href="admin.html">Admin ↗</a></p>
 </footer>
+
+<script>
+// ── CURSOR GLOW ──
+const glow = document.getElementById('cursorGlow');
+window.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+});
+window.addEventListener('touchmove', e => {
+  glow.style.left = e.touches[0].clientX + 'px';
+  glow.style.top  = e.touches[0].clientY + 'px';
+}, { passive: true });
+
+// ── STAR CANVAS ──
+const canvas = document.getElementById('starCanvas');
+const ctx    = canvas.getContext('2d');
+let W = canvas.width  = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+const mouse = { x: W/2, y: H/2 };
+const STAR_COUNT = 200;
+const stars = [];
+
+for (let i = 0; i < STAR_COUNT; i++) {
+  stars.push({
+    x: Math.random() * W, y: Math.random() * H,
+    ox: 0, oy: 0,
+    size: Math.random() * 1.8 + 0.3,
+    opacity: Math.random() * 0.7 + 0.2,
+    speed: Math.random() * 0.3 + 0.05,
+    twinkle: Math.random() * Math.PI * 2,
+    twinkleSpeed: Math.random() * 0.025 + 0.005,
+    color: Math.random() > 0.8 ? '#38bdf8' : '#ffffff',
+  });
+}
+
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('touchmove', e => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, { passive: true });
+window.addEventListener('touchstart', e => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, { passive: true });
+window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+
+function drawLines() {
+  for (let i = 0; i < stars.length; i++) {
+    for (let j = i+1; j < stars.length; j++) {
+      const a = stars[i], b = stars[j];
+      const ax = a.x+a.ox, ay = a.y+a.oy, bx = b.x+b.ox, by = b.y+b.oy;
+      const dist = Math.hypot(ax-bx, ay-by);
+      if (dist < 90) {
+        ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by);
+        ctx.strokeStyle = `rgba(56,189,248,${0.08*(1-dist/90)})`;
+        ctx.lineWidth = 0.5; ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0,0,W,H);
+  const bg = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H));
+  bg.addColorStop(0,'#060d1a'); bg.addColorStop(1,'#020810');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+  // Ambient corner glows
+  const corners = [{x:0,y:0},{x:W,y:0},{x:0,y:H},{x:W,y:H}];
+  corners.forEach(c => {
+    const cg = ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,350);
+    cg.addColorStop(0,'rgba(56,189,248,0.03)'); cg.addColorStop(1,'rgba(56,189,248,0)');
+    ctx.fillStyle=cg; ctx.fillRect(0,0,W,H);
+  });
+
+  drawLines();
+
+  stars.forEach(star => {
+    star.twinkle += star.twinkleSpeed;
+    const tw = 0.6 + 0.4*Math.sin(star.twinkle);
+    const dx = mouse.x-(star.x+star.ox), dy = mouse.y-(star.y+star.oy);
+    const dist = Math.hypot(dx,dy);
+    if (dist < 200) {
+      const force = (1-dist/200)*0.4;
+      star.ox += dx*force*0.04; star.oy += dy*force*0.04;
+    }
+    star.ox *= 0.93; star.oy *= 0.93;
+    star.y += star.speed*0.15;
+    if (star.y > H+5) { star.y=-5; star.x=Math.random()*W; }
+    const sx=star.x+star.ox, sy=star.y+star.oy;
+    // Glow halo for blue stars
+    if (star.color==='#38bdf8') {
+      ctx.beginPath(); ctx.arc(sx,sy,star.size*4,0,Math.PI*2);
+      ctx.fillStyle=`rgba(56,189,248,${0.06*tw})`; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(sx,sy,star.size*tw,0,Math.PI*2);
+    ctx.fillStyle = star.color==='#38bdf8'
+      ? `rgba(56,189,248,${star.opacity*tw})`
+      : `rgba(255,255,255,${star.opacity*tw})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 
 <script type="module">
   import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -299,144 +487,101 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
-  // ── SCROLL REVEAL ──
+  // SCROLL REVEAL
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── CAROUSEL STATE ──
-  let currentIndex = 0;
-  let totalCards   = 0;
-  const CARD_WIDTH = 320 + 24;
+  // CAROUSEL
+  let currentIndex=0, totalCards=0;
+  const CARD_WIDTH=320+24;
+  function getVisible(){ return window.innerWidth<600?1:window.innerWidth<950?2:3; }
+  function getLabNumber(t){ const m=t.match(/lab\s*(\d+)/i); return m?parseInt(m[1]):0; }
 
-  function getVisible() {
-    if (window.innerWidth < 600) return 1;
-    if (window.innerWidth < 950) return 2;
-    return 3;
-  }
-
-  function getLabNumber(title) {
-    const match = title.match(/lab\s*(\d+)/i);
-    return match ? parseInt(match[1]) : 0;
-  }
-
-  window.slide = function(dir) {
-    const vis = getVisible();
-    const max = Math.max(0, totalCards - vis);
-    currentIndex = Math.min(Math.max(currentIndex + dir, 0), max);
+  window.slide=function(dir){
+    const max=Math.max(0,totalCards-getVisible());
+    currentIndex=Math.min(Math.max(currentIndex+dir,0),max);
     updateCarousel();
   };
 
-  function updateCarousel() {
-    const track = document.getElementById('carouselTrack');
-    track.style.transform = `translateX(-${currentIndex * CARD_WIDTH}px)`;
-    const vis = getVisible();
-    document.getElementById('prevBtn').disabled = currentIndex === 0;
-    document.getElementById('nextBtn').disabled = currentIndex >= totalCards - vis;
-    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === currentIndex));
+  function updateCarousel(){
+    document.getElementById('carouselTrack').style.transform=`translateX(-${currentIndex*CARD_WIDTH}px)`;
+    const vis=getVisible();
+    document.getElementById('prevBtn').disabled=currentIndex===0;
+    document.getElementById('nextBtn').disabled=currentIndex>=totalCards-vis;
+    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===currentIndex));
   }
 
-  function buildDots() {
-    const vis = getVisible();
-    const count = Math.max(1, totalCards - vis + 1);
-    const container = document.getElementById('carouselDots');
-    container.innerHTML = '';
-    for (let i = 0; i < count; i++) {
-      const d = document.createElement('div');
-      d.className = 'dot' + (i === 0 ? ' active' : '');
-      d.onclick = () => { currentIndex = i; updateCarousel(); };
-      container.appendChild(d);
+  function buildDots(){
+    const count=Math.max(1,totalCards-getVisible()+1);
+    const c=document.getElementById('carouselDots'); c.innerHTML='';
+    for(let i=0;i<count;i++){
+      const d=document.createElement('div');
+      d.className='dot'+(i===0?' active':'');
+      d.onclick=()=>{currentIndex=i;updateCarousel();};
+      c.appendChild(d);
     }
   }
 
-  // ── TOUCH SWIPE ──
-  function initTouch() {
-    const outer = document.getElementById('trackOuter');
-    let startX = 0, isDragging = false, startTranslate = 0;
-
-    outer.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-      isDragging = true;
-    }, { passive: true });
-
-    outer.addEventListener('touchmove', e => {
-      if (!isDragging) return;
-      const diff = e.touches[0].clientX - startX;
-      const track = document.getElementById('carouselTrack');
-      track.style.transition = 'none';
-      track.style.transform = `translateX(${-currentIndex * CARD_WIDTH + diff}px)`;
-    }, { passive: true });
-
-    outer.addEventListener('touchend', e => {
-      if (!isDragging) return;
-      isDragging = false;
-      const diff = e.changedTouches[0].clientX - startX;
-      const track = document.getElementById('carouselTrack');
-      track.style.transition = 'transform .45s cubic-bezier(.4,0,.2,1)';
-      if (diff < -50) window.slide(1);
-      else if (diff > 50) window.slide(-1);
-      else updateCarousel();
+  function initTouch(){
+    const outer=document.getElementById('trackOuter');
+    let startX=0,dragging=false;
+    outer.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragging=true;},{passive:true});
+    outer.addEventListener('touchmove',e=>{
+      if(!dragging)return;
+      const diff=e.touches[0].clientX-startX;
+      const t=document.getElementById('carouselTrack');
+      t.style.transition='none';
+      t.style.transform=`translateX(${-currentIndex*CARD_WIDTH+diff}px)`;
+    },{passive:true});
+    outer.addEventListener('touchend',e=>{
+      if(!dragging)return; dragging=false;
+      const diff=e.changedTouches[0].clientX-startX;
+      document.getElementById('carouselTrack').style.transition='transform .45s cubic-bezier(.4,0,.2,1)';
+      if(diff<-50)window.slide(1); else if(diff>50)window.slide(-1); else updateCarousel();
     });
-
-    // Mouse drag support
-    outer.addEventListener('mousedown', e => {
-      startX = e.clientX; isDragging = true;
+    outer.addEventListener('mousedown',e=>{startX=e.clientX;dragging=true;});
+    window.addEventListener('mousemove',e=>{
+      if(!dragging)return;
+      const diff=e.clientX-startX;
+      const t=document.getElementById('carouselTrack');
+      t.style.transition='none';
+      t.style.transform=`translateX(${-currentIndex*CARD_WIDTH+diff}px)`;
     });
-    window.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      const diff = e.clientX - startX;
-      const track = document.getElementById('carouselTrack');
-      track.style.transition = 'none';
-      track.style.transform = `translateX(${-currentIndex * CARD_WIDTH + diff}px)`;
-    });
-    window.addEventListener('mouseup', e => {
-      if (!isDragging) return;
-      isDragging = false;
-      const diff = e.clientX - startX;
-      const track = document.getElementById('carouselTrack');
-      track.style.transition = 'transform .45s cubic-bezier(.4,0,.2,1)';
-      if (diff < -50) window.slide(1);
-      else if (diff > 50) window.slide(-1);
-      else updateCarousel();
+    window.addEventListener('mouseup',e=>{
+      if(!dragging)return; dragging=false;
+      const diff=e.clientX-startX;
+      document.getElementById('carouselTrack').style.transition='transform .45s cubic-bezier(.4,0,.2,1)';
+      if(diff<-50)window.slide(1); else if(diff>50)window.slide(-1); else updateCarousel();
     });
   }
 
-  // ── SEE MORE ──
-  window.toggleDesc = function(btn) {
-    const textEl = btn.previousElementSibling;
-    const expanded = textEl.classList.toggle('expanded');
-    btn.textContent = expanded ? '— see less' : '+ see more';
+  window.toggleDesc=function(btn){
+    const t=btn.previousElementSibling;
+    const exp=t.classList.toggle('expanded');
+    btn.textContent=exp?'— see less':'+ see more';
   };
 
-  // ── LOAD LABS ──
-  async function loadLabs() {
-    try {
-      const snap = await getDocs(collection(db, 'labs'));
-      document.getElementById('labsLoading').style.display = 'none';
-
-      if (snap.empty) {
-        document.getElementById('labsEmpty').style.display = 'block';
-        document.getElementById('completedCount').textContent = '0';
+  async function loadLabs(){
+    try{
+      const snap=await getDocs(collection(db,'labs'));
+      document.getElementById('labsLoading').style.display='none';
+      if(snap.empty){
+        document.getElementById('labsEmpty').style.display='block';
+        document.getElementById('completedCount').textContent='0';
         return;
       }
-
-      const labs = [];
-      snap.forEach(doc => labs.push({ id: doc.id, ...doc.data() }));
-      labs.sort((a, b) => getLabNumber(b.title) - getLabNumber(a.title));
-
-      totalCards = labs.length;
-      document.getElementById('completedCount').textContent = totalCards;
-
-      const track = document.getElementById('carouselTrack');
-      track.innerHTML = labs.map((lab, i) => {
-        const dateStr = lab.date
-          ? new Date(lab.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})
-          : '';
+      const labs=[];
+      snap.forEach(doc=>labs.push({id:doc.id,...doc.data()}));
+      labs.sort((a,b)=>getLabNumber(b.title)-getLabNumber(a.title));
+      totalCards=labs.length;
+      document.getElementById('completedCount').textContent=totalCards;
+      const track=document.getElementById('carouselTrack');
+      track.innerHTML=labs.map((lab,i)=>{
+        const dateStr=lab.date?new Date(lab.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):'';
         return `<div class="lab-card" style="animation-delay:${i*0.1}s">
-          ${lab.imageBase64
-            ? `<img src="${lab.imageBase64}" alt="${lab.title}">`
-            : `<div class="no-img"><i class="fa-solid fa-network-wired"></i></div>`}
+          ${lab.imageBase64?`<img src="${lab.imageBase64}" alt="${lab.title}">`:`<div class="no-img"><i class="fa-solid fa-network-wired"></i></div>`}
           <div class="lab-card-body">
             <h3>${lab.title}</h3>
             <div class="lab-date">${dateStr}</div>
@@ -447,20 +592,15 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
           </div>
         </div>`;
       }).join('');
-
-      document.getElementById('carouselArea').style.display = 'block';
-      buildDots();
-      updateCarousel();
-      initTouch();
-
-    } catch(e) {
-      document.getElementById('labsLoading').innerHTML =
-        `<i class="fa-solid fa-triangle-exclamation"></i> Could not load labs: ${e.message}`;
+      document.getElementById('carouselArea').style.display='block';
+      buildDots(); updateCarousel(); initTouch();
+    }catch(e){
+      document.getElementById('labsLoading').innerHTML=`<i class="fa-solid fa-triangle-exclamation"></i> Could not load labs: ${e.message}`;
       console.error(e);
     }
   }
 
-  window.addEventListener('resize', () => { buildDots(); updateCarousel(); });
+  window.addEventListener('resize',()=>{buildDots();updateCarousel();});
   loadLabs();
 </script>
 </body>
