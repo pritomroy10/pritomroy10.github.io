@@ -310,7 +310,7 @@ textarea{resize:vertical;min-height:110px;}
   // ============ SUBMIT LAB ============
   window.submitLab = async function(type) {
     const isCyber = type === 'cyber';
-    const collectionName = isCyber ? 'cyberlabs' : 'labs';
+    const collectionName = 'labs'; // single collection, differentiated by labType field
     const titleId = isCyber ? 'cyberLabTitle' : 'labTitle';
     const descId  = isCyber ? 'cyberLabDesc' : 'labDesc';
     const dateId  = isCyber ? 'cyberLabDate' : 'labDate';
@@ -343,6 +343,7 @@ textarea{resize:vertical;min-height:110px;}
         title,
         description: desc,
         date,
+        labType: isCyber ? 'cyber' : 'networking',
         imageBase64: imageState[type] || null,
         createdAt: serverTimestamp()
       });
@@ -377,7 +378,7 @@ textarea{resize:vertical;min-height:110px;}
 
   window.deleteCyberLab = async function(id) {
     if (!confirm('Delete this lab? Cannot be undone.')) return;
-    try { await deleteDoc(doc(db, 'cyberlabs', id)); renderCyberLabs(); }
+    try { await deleteDoc(doc(db, 'labs', id)); renderCyberLabs(); }
     catch(err) { alert('Delete error: ' + err.message); }
   };
 
@@ -392,16 +393,15 @@ textarea{resize:vertical;min-height:110px;}
     container.innerHTML = '<div class="no-labs">Loading...</div>';
     try {
       const snap = await getDocs(collection(db, 'labs'));
-      document.getElementById('totalCount').textContent = snap.size;
+      // Filter: networking = labType 'networking' OR no labType (legacy docs)
+      const all = [];
+      snap.forEach(d => all.push({ id: d.id, ...d.data() }));
+      const labs = all.filter(l => !l.labType || l.labType === 'networking');
       const now = new Date();
-      const mc = snap.docs.filter(d => {
-        const dt = new Date(d.data().date);
-        return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear();
-      }).length;
+      document.getElementById('totalCount').textContent = labs.length;
+      const mc = labs.filter(l => { const dt = new Date(l.date); return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear(); }).length;
       document.getElementById('thisMonthCount').textContent = mc;
-      if (snap.empty) { container.innerHTML = '<div class="no-labs">No labs yet. Publish your first one!</div>'; return; }
-      const labs = [];
-      snap.forEach(d => labs.push({ id: d.id, ...d.data() }));
+      if (!labs.length) { container.innerHTML = '<div class="no-labs">No labs yet. Publish your first one!</div>'; return; }
       labs.sort((a, b) => getLabNumber(b.title) - getLabNumber(a.title));
       container.innerHTML = labs.map(lab => {
         const dateStr = lab.date ? new Date(lab.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
@@ -419,17 +419,15 @@ textarea{resize:vertical;min-height:110px;}
     const container = document.getElementById('adminCyberLabsList');
     container.innerHTML = '<div class="no-labs cyber">Loading...</div>';
     try {
-      const snap = await getDocs(collection(db, 'cyberlabs'));
-      document.getElementById('cyberTotalCount').textContent = snap.size;
+      const snap = await getDocs(collection(db, 'labs'));
+      const all = [];
+      snap.forEach(d => all.push({ id: d.id, ...d.data() }));
+      const labs = all.filter(l => l.labType === 'cyber');
       const now = new Date();
-      const mc = snap.docs.filter(d => {
-        const dt = new Date(d.data().date);
-        return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear();
-      }).length;
+      document.getElementById('cyberTotalCount').textContent = labs.length;
+      const mc = labs.filter(l => { const dt = new Date(l.date); return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear(); }).length;
       document.getElementById('cyberThisMonthCount').textContent = mc;
-      if (snap.empty) { container.innerHTML = '<div class="no-labs cyber">No cybersecurity labs yet. Publish your first one!</div>'; return; }
-      const labs = [];
-      snap.forEach(d => labs.push({ id: d.id, ...d.data() }));
+      if (!labs.length) { container.innerHTML = '<div class="no-labs cyber">No cybersecurity labs yet. Publish your first one!</div>'; return; }
       labs.sort((a, b) => getLabNumber(b.title) - getLabNumber(a.title));
       container.innerHTML = labs.map(lab => {
         const dateStr = lab.date ? new Date(lab.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
