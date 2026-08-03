@@ -275,23 +275,32 @@ textarea{resize:vertical;min-height:110px;}
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
-        const maxW = 800;
+        // Keep max width at 600px and try quality 0.5 first
+        const maxW = 600;
         const scale = Math.min(1, maxW / img.width);
         canvas.width  = img.width  * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        imageState[type] = canvas.toDataURL('image/jpeg', 0.7);
-        if (type === 'networking') {
-          const preview = document.getElementById('imagePreview');
-          preview.src = imageState[type];
-          preview.style.display = 'block';
-          document.getElementById('uploadLabel').textContent = file.name + ' ✓';
-        } else {
-          const preview = document.getElementById('cyberImagePreview');
-          preview.src = imageState[type];
-          preview.style.display = 'block';
-          document.getElementById('cyberUploadLabel').textContent = file.name + ' ✓';
+        let quality = 0.5;
+        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+        // If still over ~700KB in base64 (~950KB raw), compress further
+        while (dataUrl.length > 700000 && quality > 0.1) {
+          quality = Math.round((quality - 0.1) * 10) / 10;
+          dataUrl = canvas.toDataURL('image/jpeg', quality);
         }
+        // Final safety: if still too large, reject it
+        if (dataUrl.length > 900000) {
+          alert('Image is too large even after compression. Please use a smaller screenshot (under 1MB).');
+          e.target.value = '';
+          return;
+        }
+        imageState[type] = dataUrl;
+        const previewId = type === 'networking' ? 'imagePreview' : 'cyberImagePreview';
+        const labelId   = type === 'networking' ? 'uploadLabel'  : 'cyberUploadLabel';
+        const preview = document.getElementById(previewId);
+        preview.src = dataUrl;
+        preview.style.display = 'block';
+        document.getElementById(labelId).textContent = file.name + ' ✓ (compressed)';
       };
       img.src = ev.target.result;
     };
