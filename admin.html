@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — Networking Labs</title>
+<title>Admin — Pritom Roy Portfolio</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --accent:#2dd4a0;
+  --accent2:#f59e0b;
   --bg:#040f0d;
   --bg2:#071a15;
   --bg3:#0a2319;
@@ -32,31 +33,53 @@ header h1{font-family:'Space Mono',monospace;color:var(--accent);font-size:17px;
 .header-actions{display:flex;gap:12px;}
 .btn-outline{padding:8px 18px;background:transparent;border:1.5px solid rgba(45,212,160,.4);color:var(--accent);border-radius:5px;cursor:pointer;font-size:13px;font-family:'Space Mono',monospace;text-decoration:none;}
 .btn-danger{padding:8px 16px;background:transparent;border:1.5px solid rgba(248,113,113,.4);color:#f87171;border-radius:5px;cursor:pointer;font-size:13px;}
-.main{max-width:1100px;margin:0 auto;padding:40px 5%;display:grid;grid-template-columns:1fr 1.5fr;gap:32px;align-items:start;}
+
+/* Tabs */
+.tab-nav{display:flex;gap:0;max-width:1100px;margin:32px auto 0;padding:0 5%;}
+.tab-btn{padding:10px 24px;background:var(--bg2);border:1px solid rgba(45,212,160,.12);border-bottom:none;color:var(--muted);cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.5px;border-radius:8px 8px 0 0;transition:.25s;}
+.tab-btn.active{background:var(--bg2);color:var(--accent);border-color:rgba(45,212,160,.3);}
+.tab-btn.cyber.active{color:var(--accent2);border-color:rgba(245,158,11,.3);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.main{max-width:1100px;margin:0 auto;padding:24px 5% 40px;display:grid;grid-template-columns:1fr 1.5fr;gap:32px;align-items:start;}
 @media(max-width:700px){.main{grid-template-columns:1fr;}}
 .form-card{background:var(--bg2);border:1px solid rgba(45,212,160,.1);border-radius:12px;padding:28px;position:sticky;top:90px;}
+.form-card.cyber{border-color:rgba(245,158,11,.1);}
 .form-card h2{font-family:'Space Mono',monospace;font-size:14px;color:var(--accent);letter-spacing:1px;margin-bottom:22px;}
+.form-card.cyber h2{color:var(--accent2);}
 label{display:block;font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:6px;letter-spacing:.5px;}
 input[type=text],input[type=date],textarea{width:100%;padding:11px 14px;background:var(--bg3);border:1px solid rgba(45,212,160,.15);border-radius:6px;color:var(--text);font-size:14px;outline:none;font-family:'DM Sans',sans-serif;margin-bottom:18px;}
+.form-card.cyber input[type=text]:focus,.form-card.cyber input[type=date]:focus,.form-card.cyber textarea:focus{border-color:var(--accent2);}
 input[type=text]:focus,input[type=date]:focus,textarea:focus{border-color:var(--accent);}
 input[type=date]{color-scheme:dark;}
 textarea{resize:vertical;min-height:110px;}
 .image-upload-area{border:2px dashed rgba(45,212,160,.2);border-radius:8px;padding:24px;text-align:center;cursor:pointer;margin-bottom:6px;position:relative;}
+.form-card.cyber .image-upload-area{border-color:rgba(245,158,11,.2);}
 .image-upload-area:hover{border-color:var(--accent);background:rgba(45,212,160,.03);}
+.form-card.cyber .image-upload-area:hover{border-color:var(--accent2);background:rgba(245,158,11,.03);}
 .image-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .image-upload-area i{font-size:24px;color:var(--accent);margin-bottom:8px;display:block;}
+.form-card.cyber .image-upload-area i{color:var(--accent2);}
 .image-upload-area p{font-size:13px;color:var(--muted);}
 .image-note{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;margin-bottom:18px;margin-top:6px;}
-#imagePreview{display:none;width:100%;max-height:160px;object-fit:cover;border-radius:6px;margin-bottom:18px;}
+#imagePreview,#cyberImagePreview{display:none;width:100%;max-height:160px;object-fit:cover;border-radius:6px;margin-bottom:18px;}
 .btn-submit{width:100%;padding:13px;background:var(--accent);color:var(--bg);font-weight:700;border:none;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:13px;}
+.btn-submit.cyber{background:var(--accent2);}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed;}
 .success-msg{background:rgba(45,212,160,.1);border:1px solid rgba(45,212,160,.3);color:var(--accent);padding:10px 14px;border-radius:6px;font-size:13px;margin-top:14px;display:none;font-family:'Space Mono',monospace;}
+.success-msg.cyber{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:var(--accent2);}
 .error-msg{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171;padding:10px 14px;border-radius:6px;font-size:13px;margin-top:14px;display:none;font-family:'Space Mono',monospace;word-break:break-word;}
 .progress-bar{height:4px;background:var(--bg3);border-radius:2px;margin-top:14px;display:none;overflow:hidden;}
 .progress-fill{height:100%;background:var(--accent);width:0%;transition:width .4s;border-radius:2px;}
+.progress-fill.cyber{background:var(--accent2);}
+
 .labs-panel h2{font-family:'Space Mono',monospace;font-size:14px;color:var(--accent);letter-spacing:1px;margin-bottom:20px;}
+.labs-panel.cyber h2{color:var(--accent2);}
 .lab-item{background:var(--bg2);border:1px solid rgba(45,212,160,.1);border-radius:10px;overflow:hidden;margin-bottom:18px;display:flex;}
+.lab-item.cyber{border-color:rgba(245,158,11,.1);}
 .lab-item:hover{border-color:rgba(45,212,160,.3);}
+.lab-item.cyber:hover{border-color:rgba(245,158,11,.3);}
 .lab-item img{width:110px;height:90px;object-fit:cover;flex-shrink:0;}
 .lab-item .no-img-thumb{width:110px;height:90px;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .lab-item .no-img-thumb i{color:var(--muted2);font-size:22px;}
@@ -68,9 +91,12 @@ textarea{resize:vertical;min-height:110px;}
 .btn-delete{padding:6px 10px;background:transparent;border:1px solid rgba(248,113,113,.3);color:#f87171;border-radius:4px;cursor:pointer;font-size:11px;font-family:'Space Mono',monospace;}
 .btn-delete:hover{background:rgba(248,113,113,.1);}
 .no-labs{text-align:center;padding:40px;color:var(--muted2);font-family:'Space Mono',monospace;font-size:13px;border:1px dashed rgba(45,212,160,.1);border-radius:10px;}
+.no-labs.cyber{border-color:rgba(245,158,11,.1);}
 .stats-bar{display:flex;gap:16px;margin-bottom:20px;}
 .stat{background:var(--bg2);border:1px solid rgba(45,212,160,.1);border-radius:8px;padding:14px 20px;flex:1;text-align:center;}
+.stat.cyber{border-color:rgba(245,158,11,.1);}
 .stat .num{font-family:'Space Mono',monospace;font-size:26px;color:var(--accent);}
+.stat.cyber .num{color:var(--accent2);}
 .stat .lbl{font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:2px;}
 </style>
 </head>
@@ -80,7 +106,7 @@ textarea{resize:vertical;min-height:110px;}
 <div id="loginScreen">
   <div class="login-box">
     <h1>Admin Access</h1>
-    <p class="sub">Pritom Roy · Networking Labs</p>
+    <p class="sub">Pritom Roy · Portfolio</p>
     <input type="text" id="usernameInput" placeholder="Username" autocomplete="off">
     <input type="password" id="passwordInput" placeholder="Password">
     <button onclick="doLogin()">Login →</button>
@@ -91,45 +117,92 @@ textarea{resize:vertical;min-height:110px;}
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
   <header>
-    <h1><i class="fa-solid fa-network-wired" style="margin-right:10px;"></i>Networking Labs Admin</h1>
+    <h1><i class="fa-solid fa-user-shield" style="margin-right:10px;"></i>Portfolio Admin</h1>
     <div class="header-actions">
       <a href="index.html" class="btn-outline" target="_blank">View Site ↗</a>
       <button class="btn-danger" onclick="doLogout()">Logout</button>
     </div>
   </header>
 
-  <div class="main">
-    <div class="form-card">
-      <h2>// NEW LAB POST</h2>
-      <label>LAB TITLE *</label>
-      <input type="text" id="labTitle" placeholder="e.g. Lab 4 — VLAN Configuration">
-      <label>DATE</label>
-      <input type="date" id="labDate">
-      <label>PHOTO (optional)</label>
-      <div class="image-upload-area">
-        <input type="file" id="imageInput" accept="image/*" onchange="handleImage(event)">
-        <i class="fa-regular fa-image"></i>
-        <p id="uploadLabel">Click to upload your lab screenshot</p>
-      </div>
-      <p class="image-note">Keep photos under 500KB for best results</p>
-      <img id="imagePreview" alt="Preview">
-      <label>DESCRIPTION *</label>
-      <textarea id="labDesc" placeholder="What did you do in this lab? What did you learn?"></textarea>
-      <button class="btn-submit" id="submitBtn" onclick="submitLab()">
-        <i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab
-      </button>
-      <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="success-msg" id="successMsg">✓ Lab published! Everyone can now see it.</div>
-      <div class="error-msg" id="errorMsg"></div>
-    </div>
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('networking')"><i class="fa-solid fa-network-wired" style="margin-right:6px;"></i>Networking Labs</button>
+    <button class="tab-btn cyber" onclick="switchTab('cyber')"><i class="fa-solid fa-shield-halved" style="margin-right:6px;"></i>CyberSecurity Labs</button>
+  </div>
 
-    <div class="labs-panel">
-      <div class="stats-bar">
-        <div class="stat"><div class="num" id="totalCount">—</div><div class="lbl">TOTAL LABS</div></div>
-        <div class="stat"><div class="num" id="thisMonthCount">—</div><div class="lbl">THIS MONTH</div></div>
+  <!-- ============ NETWORKING LABS TAB ============ -->
+  <div id="tab-networking" class="tab-content active">
+    <div class="main">
+      <div class="form-card">
+        <h2>// NEW NETWORKING LAB</h2>
+        <label>LAB TITLE *</label>
+        <input type="text" id="labTitle" placeholder="e.g. Lab 4 — VLAN Configuration">
+        <label>DATE</label>
+        <input type="date" id="labDate">
+        <label>PHOTO (optional)</label>
+        <div class="image-upload-area">
+          <input type="file" id="imageInput" accept="image/*" onchange="handleImage(event,'networking')">
+          <i class="fa-regular fa-image"></i>
+          <p id="uploadLabel">Click to upload your lab screenshot</p>
+        </div>
+        <p class="image-note">Keep photos under 500KB for best results</p>
+        <img id="imagePreview" alt="Preview">
+        <label>DESCRIPTION *</label>
+        <textarea id="labDesc" placeholder="What did you do in this lab? What did you learn?"></textarea>
+        <button class="btn-submit" id="submitBtn" onclick="submitLab('networking')">
+          <i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab
+        </button>
+        <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="success-msg" id="successMsg">✓ Lab published! Everyone can now see it.</div>
+        <div class="error-msg" id="errorMsg"></div>
       </div>
-      <h2>// ALL PUBLISHED LABS</h2>
-      <div id="adminLabsList"><div class="no-labs">Loading...</div></div>
+
+      <div class="labs-panel">
+        <div class="stats-bar">
+          <div class="stat"><div class="num" id="totalCount">—</div><div class="lbl">TOTAL LABS</div></div>
+          <div class="stat"><div class="num" id="thisMonthCount">—</div><div class="lbl">THIS MONTH</div></div>
+        </div>
+        <h2>// ALL PUBLISHED LABS</h2>
+        <div id="adminLabsList"><div class="no-labs">Loading...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CYBERSECURITY LABS TAB ============ -->
+  <div id="tab-cyber" class="tab-content">
+    <div class="main">
+      <div class="form-card cyber">
+        <h2>// NEW CYBERSECURITY LAB</h2>
+        <label>LAB TITLE *</label>
+        <input type="text" id="cyberLabTitle" placeholder="e.g. Cyber Lab 1 — Wireshark Traffic Analysis">
+        <label>DATE</label>
+        <input type="date" id="cyberLabDate">
+        <label>PHOTO (optional)</label>
+        <div class="image-upload-area">
+          <input type="file" id="cyberImageInput" accept="image/*" onchange="handleImage(event,'cyber')">
+          <i class="fa-regular fa-image"></i>
+          <p id="cyberUploadLabel">Click to upload your lab screenshot</p>
+        </div>
+        <p class="image-note">Keep photos under 500KB for best results</p>
+        <img id="cyberImagePreview" alt="Preview">
+        <label>DESCRIPTION *</label>
+        <textarea id="cyberLabDesc" placeholder="What did you do in this lab? What did you learn?"></textarea>
+        <button class="btn-submit cyber" id="cyberSubmitBtn" onclick="submitLab('cyber')">
+          <i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab
+        </button>
+        <div class="progress-bar" id="cyberProgressBar"><div class="progress-fill cyber" id="cyberProgressFill"></div></div>
+        <div class="success-msg cyber" id="cyberSuccessMsg">✓ Lab published! Everyone can now see it.</div>
+        <div class="error-msg" id="cyberErrorMsg"></div>
+      </div>
+
+      <div class="labs-panel cyber">
+        <div class="stats-bar">
+          <div class="stat cyber"><div class="num" id="cyberTotalCount">—</div><div class="lbl">TOTAL LABS</div></div>
+          <div class="stat cyber"><div class="num" id="cyberThisMonthCount">—</div><div class="lbl">THIS MONTH</div></div>
+        </div>
+        <h2>// ALL PUBLISHED LABS</h2>
+        <div id="adminCyberLabsList"><div class="no-labs cyber">Loading...</div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -152,6 +225,7 @@ textarea{resize:vertical;min-height:110px;}
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
+  // ============ AUTH ============
   window.doLogin = function() {
     const u = document.getElementById('usernameInput').value.trim();
     const p = document.getElementById('passwordInput').value.trim();
@@ -177,9 +251,23 @@ textarea{resize:vertical;min-height:110px;}
     document.getElementById('adminPanel').style.display='block';
   }
 
-  let imageBase64 = null;
+  // ============ TAB SWITCHING ============
+  window.switchTab = function(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    if (tab === 'networking') {
+      document.querySelector('.tab-btn:first-child').classList.add('active');
+      document.getElementById('tab-networking').classList.add('active');
+    } else {
+      document.querySelector('.tab-btn.cyber').classList.add('active');
+      document.getElementById('tab-cyber').classList.add('active');
+    }
+  };
 
-  window.handleImage = function(e) {
+  // ============ IMAGE HANDLING ============
+  const imageState = { networking: null, cyber: null };
+
+  window.handleImage = function(e, type) {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
@@ -192,58 +280,96 @@ textarea{resize:vertical;min-height:110px;}
         canvas.width  = img.width  * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        imageBase64 = canvas.toDataURL('image/jpeg', 0.7);
-        const preview = document.getElementById('imagePreview');
-        preview.src = imageBase64;
-        preview.style.display = 'block';
-        document.getElementById('uploadLabel').textContent = file.name + ' ✓';
+        imageState[type] = canvas.toDataURL('image/jpeg', 0.7);
+        if (type === 'networking') {
+          const preview = document.getElementById('imagePreview');
+          preview.src = imageState[type];
+          preview.style.display = 'block';
+          document.getElementById('uploadLabel').textContent = file.name + ' ✓';
+        } else {
+          const preview = document.getElementById('cyberImagePreview');
+          preview.src = imageState[type];
+          preview.style.display = 'block';
+          document.getElementById('cyberUploadLabel').textContent = file.name + ' ✓';
+        }
       };
       img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   };
 
-  window.submitLab = async function() {
-    const title = document.getElementById('labTitle').value.trim();
-    const desc  = document.getElementById('labDesc').value.trim();
-    const date  = document.getElementById('labDate').value || new Date().toISOString().split('T')[0];
+  // ============ SUBMIT LAB ============
+  window.submitLab = async function(type) {
+    const isCyber = type === 'cyber';
+    const collectionName = isCyber ? 'cyberlabs' : 'labs';
+    const titleId = isCyber ? 'cyberLabTitle' : 'labTitle';
+    const descId  = isCyber ? 'cyberLabDesc' : 'labDesc';
+    const dateId  = isCyber ? 'cyberLabDate' : 'labDate';
+    const btnId   = isCyber ? 'cyberSubmitBtn' : 'submitBtn';
+    const progressId = isCyber ? 'cyberProgressBar' : 'progressBar';
+    const fillId  = isCyber ? 'cyberProgressFill' : 'progressFill';
+    const successId = isCyber ? 'cyberSuccessMsg' : 'successMsg';
+    const errorId = isCyber ? 'cyberErrorMsg' : 'errorMsg';
+    const imagePreviewId = isCyber ? 'cyberImagePreview' : 'imagePreview';
+    const uploadLabelId = isCyber ? 'cyberUploadLabel' : 'uploadLabel';
+    const imageInputId = isCyber ? 'cyberImageInput' : 'imageInput';
+
+    const title = document.getElementById(titleId).value.trim();
+    const desc  = document.getElementById(descId).value.trim();
+    const date  = document.getElementById(dateId).value || new Date().toISOString().split('T')[0];
     if (!title || !desc) { alert('Please fill in Title and Description.'); return; }
 
-    const btn=document.getElementById('submitBtn'),progress=document.getElementById('progressBar'),
-      fill=document.getElementById('progressFill'),successEl=document.getElementById('successMsg'),
-      errorEl=document.getElementById('errorMsg');
+    const btn = document.getElementById(btnId);
+    const progress = document.getElementById(progressId);
+    const fill = document.getElementById(fillId);
+    const successEl = document.getElementById(successId);
+    const errorEl = document.getElementById(errorId);
 
-    btn.disabled=true; btn.textContent='Publishing...';
-    progress.style.display='block'; fill.style.width='40%';
-    successEl.style.display='none'; errorEl.style.display='none';
+    btn.disabled = true; btn.textContent = 'Publishing...';
+    progress.style.display = 'block'; fill.style.width = '40%';
+    successEl.style.display = 'none'; errorEl.style.display = 'none';
 
     try {
-      await addDoc(collection(db,'labs'),{title,description:desc,date,imageBase64:imageBase64||null,createdAt:serverTimestamp()});
-      fill.style.width='100%';
-      successEl.style.display='block';
-      document.getElementById('labTitle').value='';
-      document.getElementById('labDesc').value='';
-      document.getElementById('labDate').value=new Date().toISOString().split('T')[0];
-      document.getElementById('imagePreview').style.display='none';
-      document.getElementById('uploadLabel').textContent='Click to upload your lab screenshot';
-      document.getElementById('imageInput').value='';
-      imageBase64=null;
-      setTimeout(()=>{progress.style.display='none';fill.style.width='0%';},1500);
-      renderAdminLabs();
+      await addDoc(collection(db, collectionName), {
+        title,
+        description: desc,
+        date,
+        imageBase64: imageState[type] || null,
+        createdAt: serverTimestamp()
+      });
+      fill.style.width = '100%';
+      successEl.style.display = 'block';
+      document.getElementById(titleId).value = '';
+      document.getElementById(descId).value = '';
+      document.getElementById(dateId).value = new Date().toISOString().split('T')[0];
+      document.getElementById(imagePreviewId).style.display = 'none';
+      document.getElementById(uploadLabelId).textContent = 'Click to upload your lab screenshot';
+      document.getElementById(imageInputId).value = '';
+      imageState[type] = null;
+      setTimeout(() => { progress.style.display = 'none'; fill.style.width = '0%'; }, 1500);
+      if (isCyber) renderCyberLabs();
+      else renderNetworkingLabs();
     } catch(err) {
-      errorEl.textContent='✗ Error: '+err.message;
-      errorEl.style.display='block';
-      progress.style.display='none';
+      errorEl.textContent = '✗ Error: ' + err.message;
+      errorEl.style.display = 'block';
+      progress.style.display = 'none';
       console.error(err);
     }
-    btn.disabled=false;
-    btn.innerHTML='<i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-upload" style="margin-right:8px;"></i>Publish Lab';
   };
 
-  window.deleteLab = async function(id) {
+  // ============ DELETE ============
+  window.deleteNetworkingLab = async function(id) {
     if (!confirm('Delete this lab? Cannot be undone.')) return;
-    try { await deleteDoc(doc(db,'labs',id)); renderAdminLabs(); }
-    catch(err) { alert('Delete error: '+err.message); }
+    try { await deleteDoc(doc(db, 'labs', id)); renderNetworkingLabs(); }
+    catch(err) { alert('Delete error: ' + err.message); }
+  };
+
+  window.deleteCyberLab = async function(id) {
+    if (!confirm('Delete this lab? Cannot be undone.')) return;
+    try { await deleteDoc(doc(db, 'cyberlabs', id)); renderCyberLabs(); }
+    catch(err) { alert('Delete error: ' + err.message); }
   };
 
   function getLabNumber(title) {
@@ -251,36 +377,70 @@ textarea{resize:vertical;min-height:110px;}
     return match ? parseInt(match[1]) : 0;
   }
 
-  async function renderAdminLabs() {
-    const container=document.getElementById('adminLabsList');
-    container.innerHTML='<div class="no-labs">Loading...</div>';
+  // ============ RENDER NETWORKING LABS ============
+  async function renderNetworkingLabs() {
+    const container = document.getElementById('adminLabsList');
+    container.innerHTML = '<div class="no-labs">Loading...</div>';
     try {
-      const snap=await getDocs(collection(db,'labs'));
-      document.getElementById('totalCount').textContent=snap.size;
-      const now=new Date();
-      const mc=snap.docs.filter(d=>{const dt=new Date(d.data().date);return dt.getMonth()===now.getMonth()&&dt.getFullYear()===now.getFullYear();}).length;
-      document.getElementById('thisMonthCount').textContent=mc;
-      if(snap.empty){container.innerHTML='<div class="no-labs">No labs yet. Publish your first one!</div>';return;}
-      const labs=[];
-      snap.forEach(d=>labs.push({id:d.id,...d.data()}));
-      labs.sort((a,b)=>getLabNumber(b.title)-getLabNumber(a.title));
-      container.innerHTML=labs.map(lab=>{
-        const dateStr=lab.date?new Date(lab.date).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'';
+      const snap = await getDocs(collection(db, 'labs'));
+      document.getElementById('totalCount').textContent = snap.size;
+      const now = new Date();
+      const mc = snap.docs.filter(d => {
+        const dt = new Date(d.data().date);
+        return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear();
+      }).length;
+      document.getElementById('thisMonthCount').textContent = mc;
+      if (snap.empty) { container.innerHTML = '<div class="no-labs">No labs yet. Publish your first one!</div>'; return; }
+      const labs = [];
+      snap.forEach(d => labs.push({ id: d.id, ...d.data() }));
+      labs.sort((a, b) => getLabNumber(b.title) - getLabNumber(a.title));
+      container.innerHTML = labs.map(lab => {
+        const dateStr = lab.date ? new Date(lab.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
         return `<div class="lab-item">
-          ${lab.imageBase64?`<img src="${lab.imageBase64}" alt="${lab.title}">`:`<div class="no-img-thumb"><i class="fa-solid fa-network-wired"></i></div>`}
+          ${lab.imageBase64 ? `<img src="${lab.imageBase64}" alt="${lab.title}">` : `<div class="no-img-thumb"><i class="fa-solid fa-network-wired"></i></div>`}
           <div class="lab-item-body"><h3>${lab.title}</h3><div class="date">${dateStr}</div><p>${lab.description}</p></div>
-          <div class="lab-item-actions"><button class="btn-delete" onclick="deleteLab('${lab.id}')"><i class="fa-solid fa-trash-can"></i></button></div>
+          <div class="lab-item-actions"><button class="btn-delete" onclick="deleteNetworkingLab('${lab.id}')"><i class="fa-solid fa-trash-can"></i></button></div>
         </div>`;
       }).join('');
-    } catch(err){container.innerHTML=`<div class="no-labs">Error: ${err.message}</div>`;console.error(err);}
+    } catch(err) { container.innerHTML = `<div class="no-labs">Error: ${err.message}</div>`; console.error(err); }
   }
 
-  function initPanel(){
-    document.getElementById('labDate').value=new Date().toISOString().split('T')[0];
-    renderAdminLabs();
+  // ============ RENDER CYBERSECURITY LABS ============
+  async function renderCyberLabs() {
+    const container = document.getElementById('adminCyberLabsList');
+    container.innerHTML = '<div class="no-labs cyber">Loading...</div>';
+    try {
+      const snap = await getDocs(collection(db, 'cyberlabs'));
+      document.getElementById('cyberTotalCount').textContent = snap.size;
+      const now = new Date();
+      const mc = snap.docs.filter(d => {
+        const dt = new Date(d.data().date);
+        return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear();
+      }).length;
+      document.getElementById('cyberThisMonthCount').textContent = mc;
+      if (snap.empty) { container.innerHTML = '<div class="no-labs cyber">No cybersecurity labs yet. Publish your first one!</div>'; return; }
+      const labs = [];
+      snap.forEach(d => labs.push({ id: d.id, ...d.data() }));
+      labs.sort((a, b) => getLabNumber(b.title) - getLabNumber(a.title));
+      container.innerHTML = labs.map(lab => {
+        const dateStr = lab.date ? new Date(lab.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+        return `<div class="lab-item cyber">
+          ${lab.imageBase64 ? `<img src="${lab.imageBase64}" alt="${lab.title}">` : `<div class="no-img-thumb"><i class="fa-solid fa-shield-halved"></i></div>`}
+          <div class="lab-item-body"><h3>${lab.title}</h3><div class="date">${dateStr}</div><p>${lab.description}</p></div>
+          <div class="lab-item-actions"><button class="btn-delete" onclick="deleteCyberLab('${lab.id}')"><i class="fa-solid fa-trash-can"></i></button></div>
+        </div>`;
+      }).join('');
+    } catch(err) { container.innerHTML = `<div class="no-labs cyber">Error: ${err.message}</div>`; console.error(err); }
   }
 
-  if(sessionStorage.getItem('adminOK')==='1') initPanel();
+  function initPanel() {
+    document.getElementById('labDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('cyberLabDate').value = new Date().toISOString().split('T')[0];
+    renderNetworkingLabs();
+    renderCyberLabs();
+  }
+
+  if (sessionStorage.getItem('adminOK') === '1') initPanel();
 </script>
 </body>
 </html>
