@@ -33,65 +33,7 @@ nav a:hover{color:#38bdf8;text-shadow:0 0 12px rgba(56,189,248,.8);}
 .btn:hover{background:#38bdf8;color:#060d1a;box-shadow:0 0 30px rgba(56,189,248,.6);}
 .btn-secondary{border-color:rgba(56,189,248,.4);color:#94a3b8;}
 .btn-secondary:hover{background:rgba(56,189,248,.1);color:#38bdf8;border-color:#38bdf8;}
-@media(max-width:700px){
-  /* Keep the mobile navigation from covering the hero content. */
-  nav{
-    position:absolute;
-    background:transparent;
-    backdrop-filter:none;
-    -webkit-backdrop-filter:none;
-    border-bottom-color:transparent;
-    box-shadow:none;
-  }
-
-  /* Mobile order: photo, introduction, description, resume, then contact. */
-  .hero{
-    min-height:100svh;
-    padding:120px 8% 40px;
-  }
-  .hero-inner{
-    display:grid;
-    grid-template-columns:1fr;
-    grid-template-areas:
-      "photo"
-      "name"
-      "role"
-      "description"
-      "resume"
-      "contact";
-    justify-items:center;
-    gap:0;
-    text-align:center;
-  }
-  .hero-photo{grid-area:photo;}
-  .hero-photo img{width:160px;height:160px;}
-  .hero-text{display:contents;}
-  .hero-text h1{grid-area:name;font-size:30px;margin-top:18px;}
-  .hero-role{grid-area:role;}
-  .hero-text>p:not(.hero-role){grid-area:description;}
-  .hero-btns{display:contents;}
-  .hero-btns .btn-secondary{
-    grid-area:resume;
-    display:inline-block;
-    width:auto;
-    margin-top:16px;
-    padding:12px 26px;
-    background:transparent;
-    color:#94a3b8;
-    border:1.5px solid rgba(56,189,248,.4);
-    border-radius:6px;
-    box-shadow:0 0 15px rgba(56,189,248,.2);
-  }
-  .hero-btns .btn-secondary:hover{
-    background:rgba(56,189,248,.1);
-    color:#38bdf8;
-    border-color:#38bdf8;
-  }
-  .hero-btns .btn:not(.btn-secondary){
-    grid-area:contact;
-    margin-top:20px;
-  }
-}
+@media(max-width:700px){.hero-inner{flex-direction:column;text-align:center;}.hero-text h1{font-size:30px;}.hero-btns{justify-content:center;}}
 section{padding:100px 8%;}
 .title{font-size:12px;font-family:"Space Mono",monospace;letter-spacing:3px;color:#38bdf8;text-align:center;margin-bottom:10px;text-transform:uppercase;text-shadow:0 0 15px rgba(56,189,248,.5);}
 .section-heading{font-size:30px;font-family:"Space Mono",monospace;text-align:center;margin-bottom:50px;color:#f1f5f9;}
@@ -214,8 +156,8 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
     <a href="#experience">Experience</a>
     <a href="#skills">Skills</a>
     <a href="#education">Education</a>
-    <a href="#labs">Networking Labs</a>
-    <a href="#cyberlabs">CyberSecurity Labs</a>
+    <a href="#labs">Labs</a>
+    <a href="#cyberlabs">CyberSecurity</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
@@ -223,15 +165,15 @@ footer a{color:#38bdf8;text-decoration:none;font-size:12px;margin-left:12px;}
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-photo">
-      <img src="https://i.ibb.co/j9rYTDmd/IMG-20260725-210947.png" alt="Pritom Roy" fetchpriority="high">
+      <img src="https://i.ibb.co/j9rYTDmd/IMG-20260725-210947.png" alt="Pritom Roy" loading="lazy">
     </div>
     <div class="hero-text">
       <h1>Hello, I'm <span>Pritom Roy</span></h1>
-      <p class="hero-role">IT &amp; Networking Professional &nbsp;·&nbsp; Document Controller &nbsp;·&nbsp; Technical Support</p>
+      <p class="hero-role">Entry-Level IT &amp; Networking Professional &nbsp;·&nbsp; Document Controller &nbsp;·&nbsp; Technical Support</p>
       <p>Based in Saudi Arabia with experience in document control, construction operations, and technical support. Actively developing networking skills through hands-on Cisco Packet Tracer and GNS3 labs while building practical IT knowledge.</p>
       <div class="hero-btns">
         <a href="#contact" class="btn">Contact Me</a>
-        <a href="Pritom's resume.pdf" download="Pritom Resume.pdf" target="_blank" class="btn btn-secondary" onclick="handleResumeDownload(event)"><i class="fa-solid fa-download" style="margin-right:8px;"></i>Download Resume</a>
+        <a href="Pritom's resume.pdf" download class="btn btn-secondary"><i class="fa-solid fa-download" style="margin-right:8px;"></i>Download Resume</a>
       </div>
     </div>
   </div>
@@ -604,22 +546,6 @@ window.addEventListener('resize', () => {
 // Load both on page load
 loadLabs('networking');
 loadLabs('cyber');
-</script>
-<script>
-  function handleResumeDownload(e) {
-    const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent);
-    if (isMobile) {
-      e.preventDefault();
-      // Force download via JavaScript
-      const link = document.createElement('a');
-      link.href = "Pritom's resume.pdf";
-      link.download = "Pritom Resume.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    // On desktop, the native download attribute will work fine
-  }
 </script>
 </body>
 </html>
