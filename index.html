@@ -605,5 +605,21 @@ window.addEventListener('resize', () => {
 loadLabs('networking');
 loadLabs('cyber');
 </script>
+<script>
+  function handleResumeDownload(e) {
+    const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent);
+    if (isMobile) {
+      e.preventDefault();
+      // Force download via JavaScript
+      const link = document.createElement('a');
+      link.href = "Pritom's resume.pdf";
+      link.download = "Pritom Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    // On desktop, the native download attribute will work fine
+  }
+</script>
 </body>
 </html>
