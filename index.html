@@ -34,7 +34,7 @@ nav a:hover{color:#38bdf8;text-shadow:0 0 12px rgba(56,189,248,.8);}
 .btn-secondary{border-color:#38bdf8;color:#38bdf8;}
 .btn-secondary:hover{background:#38bdf8;color:#060d1a;border-color:#38bdf8;box-shadow:0 0 30px rgba(56,189,248,.6);}
 @media(max-width:700px){
-  /* Keep the mobile navigation from covering the hero content. */
+  /* Keep the mobile navigation transparent without changing the hero layout. */
   nav{
     position:absolute;
     top:0;
@@ -73,55 +73,17 @@ nav a:hover{color:#38bdf8;text-shadow:0 0 12px rgba(56,189,248,.8);}
     letter-spacing:0;
   }
 
-  /* Mobile order: photo, introduction, description, resume, then contact. */
+  /* Restore the original simple mobile hero layout. */
   .hero{
-    min-height:100svh;
-    padding:120px 8% 40px;
+    min-height:100vh;
+    padding:100px 8% 60px;
   }
   .hero-inner{
-    display:grid;
-    grid-template-columns:1fr;
-    grid-template-areas:
-      "photo"
-      "name"
-      "role"
-      "description"
-      "resume"
-      "contact";
-    justify-items:center;
-    gap:0;
+    flex-direction:column;
     text-align:center;
   }
-  .hero-photo{grid-area:photo;}
-  .hero-photo img{width:160px;height:160px;}
-  .hero-text{display:contents;}
-  .hero-text h1{grid-area:name;font-size:30px;margin-top:18px;}
-  .hero-role{grid-area:role;}
-  .hero-text>p:not(.hero-role){grid-area:description;}
-  .hero-btns{display:contents;}
-  .hero-btns .btn-secondary{
-    grid-area:resume;
-    display:inline-block;
-    width:auto;
-    margin-top:16px;
-    padding:12px 26px;
-    background:transparent;
-    color:#38bdf8;
-    border:1.5px solid #38bdf8;
-    border-radius:6px;
-    box-shadow:0 0 15px rgba(56,189,248,.2);
-  }
-  .hero-btns .btn-secondary:hover,
-  .hero-btns .btn-secondary:focus-visible{
-    background:#38bdf8;
-    color:#060d1a;
-    border-color:#38bdf8;
-    box-shadow:0 0 30px rgba(56,189,248,.6);
-  }
-  .hero-btns .btn:not(.btn-secondary){
-    grid-area:contact;
-    margin-top:20px;
-  }
+  .hero-text h1{font-size:30px;}
+  .hero-btns{justify-content:center;}
 }
 section{padding:100px 8%;}
 .title{font-size:12px;font-family:"Space Mono",monospace;letter-spacing:3px;color:#38bdf8;text-align:center;margin-bottom:10px;text-transform:uppercase;text-shadow:0 0 15px rgba(56,189,248,.5);}
